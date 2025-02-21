@@ -1,78 +1,55 @@
 <template>
-    <h1 class="text-danger">{{ count }}</h1>
-    <button @click="handleCount" class="btn btn-success">Increment</button>
+    <!-- <h3>{{ fullName }}</h3> -->
+  
+    <!-- <input type="text" v-model="age" class="form-control" placeholder="Nhập tuổi" />
+    <p v-if="canRegister">Đủ điều kiện đăng ký</p>
+    <p v-else>Không đủ điều kiện đăng ký</p> -->
 
-    <p>Text: {{ inputText }}</p>
-    <input v-model="inputText" type="text" class="form-control" placeholder="Enter text">
-    <h1>{{ user.name }}</h1>
-    <h2>{{ user.age }}</h2>
-    <h3>{{ user.email }}</h3>
-
-    <ul v-for="(user, index) in users" :key="user.name">
-        <li>{{ index + 1 }} - {{ user.name }}</li>
-        <li>{{ user.age }}</li>
-        <li>{{ user.email }}</li>
+    <h1>Danh sách người dùng</h1>
+    <ul v-for="user in users" :key="user.id">
+      <li>
+        {{ user.name }} - {{ user.age }}
+      </li>
     </ul>
 
+    <h1>Danh sách người trên 18 tuổi</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>STT</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Email</th>
-                <th>Gender</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(user, index) in users" :key="user.name">
-                <td>{{ index + 1 }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.age }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.isActive ? "Nam " : "Nữ" }}</td>
-            </tr>
-        </tbody>
-    </table>
-</template>
+    <ul v-for="user in usersOver18" :key="user.id">
+        <li>
+        {{ user.name }} - {{ user.age }}
+        </li>
+    </ul>
+  </template>
 
-<script setup>
-    import { reactive, ref } from 'vue'
-    // Khi muốn sử dụng biến khai báo với ref, cần thêm từ khóa value
-
-    // Khởi tạo giá trị ban đầu ~ number hoặc text
-    const count = ref(0)
-    const inputText = ref('VitaminCode01');
-    
-
-// reactive ~ muốn sử dụng biến khai báo với reactive, không cần thêm từ khóa value
-// được sử dụng để tạo đối tượng hoặc mảng phản ứng
-// tất cả các thuộc tính bên trong reactive đều là đối tượng phản ứng
-    const user = reactive({
-        name: 'VitaminCode',
-        age: 20,
-        email: "C0ngHungDCH@gmail.com",
-    })
+  
+  
+  <script setup>
+  import { computed, ref, reactive } from 'vue';
+  
+//   const firstName = ref('Công');
+//   const lastName = ref('Hùng');
+  
+//   const age = ref(20);
+//   const canRegister = computed(() => age.value >= 18);
+  
+  // computed - hàm tính toán
+  const fullName = computed(() => `${firstName.value} ${lastName.value}`);
 
 
-    // Computed
+  // dùng coputed -> làm việc với mảng 
+  const users = reactive([{
+  id: 1,
+  name: 'Huy',
+  age: 20,
+},
+{
+  id: 2,
+  name: 'Tuan',
+  age: 15,
+}])
 
-    // v-for ~ vòng lặp
-    const users = reactive([
-  { name: 'Gia Minh', age: 21, email: "user@example.com", isActive:true },
-  { name: 'Jer', age: 21, email: "user@example.com" },
-  { name: 'Hải Nam', age: 21, email: "user@example.com" },
-  { name: 'Công Hùng', age: 21, email: "user@example.com" },
-])
-    // arrow function
-    // @click
+// Dùng coputed --> lọc những người trên 18 tuổi
+const usersOver18 = computed(() => users.filter(user => user.age >= 18))
 
-    // const handleCount = () => {
-    //     count.value++
-    // };
-
-</script>
-
-<style scoped>
-</style>
+  </script>
+  

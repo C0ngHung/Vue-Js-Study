@@ -1,6 +1,7 @@
 import MainLayout from '@/layouts/MainLayout.vue'
 import About from '@/views/About.vue'
 import Home from '@/views/Home.vue'
+import ParentComponent from '@/components/props/ParentComponent.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
@@ -25,6 +26,11 @@ const router = createRouter({
 
         }
       ]
+    },
+    {
+      path: "/props",
+      name: "Props",
+      component: ParentComponent,
     },
     // {
     //   path: '/about',
